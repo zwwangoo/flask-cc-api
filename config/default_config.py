@@ -1,0 +1,2 @@
+class DefaultConfig(dict):
+    pass
