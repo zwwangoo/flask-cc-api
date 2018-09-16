@@ -1,9 +1,0 @@
-cc_api.egg-info/PKG-INFO
-cc_api.egg-info/SOURCES.txt
-cc_api.egg-info/dependency_links.txt
-cc_api.egg-info/top_level.txt
-cc_api.egg-info/zip-safe
-proj/__init__.py
-proj/tasks.py
-views/__init__.py
-views/api.py
