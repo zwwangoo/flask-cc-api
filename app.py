@@ -19,7 +19,7 @@ def create_app():
 
     configure_app(app)
     configure_blueprint(app)
-    make_celery(app, celery)
+    configure_celery(app, celery)
     return app
 
 def configure_app(app):
@@ -27,7 +27,7 @@ def configure_app(app):
     app.config.from_object(DefaultConfig)
 
 
-def make_celery(app, celery):
+def configure_celery(app, celery):
     app.config.update({"BROKER_URL": app.config["CELERY_BROKER_URL"]})
     celery.conf.update(app.config)
 
