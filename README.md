@@ -11,6 +11,7 @@ python3.6
 安装相关包：
 
     make install
+
 运行：
 
     make run
