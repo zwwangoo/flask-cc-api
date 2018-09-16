@@ -1,5 +1,6 @@
 from flask import Blueprint, current_app
 from flask_restful import Resource, Api
+from proj.tasks import add
 
 api_blueprint = Blueprint('api', __name__)
 api = Api(api_blueprint, catch_all_404s=True)
@@ -8,7 +9,8 @@ api = Api(api_blueprint, catch_all_404s=True)
 class Index(Resource):
 
     def get(self):
-        print(current_app.config)
+        # 10 秒后执行该函数
+        add.apply_async((2, 2), countdown=10)
         return 'ok'
 
 

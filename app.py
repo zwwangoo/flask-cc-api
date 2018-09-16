@@ -1,24 +1,34 @@
+import os
 from flask import Flask
-from celery import Celery
+from extensions import celery
 from views.api import api_blueprint
 
 from config.celery_config import CeleryConfig
+from config.default_config import DefaultConfig
 
+from extensions import celery
+
+_default_instance_path = '%(instance_path)s/instance' % \
+                         {'instance_path': os.path.dirname(os.path.realpath(__file__))}
 
 def create_app():
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object(CeleryConfig)
-    app.config.from_pyfile('config.py')
+    app = Flask(__name__, instance_relative_config=True, instance_path=_default_instance_path)
+
+    if not os.path.exists(app.instance_path):
+        os.makedirs(app.instance_path)
+
+    configure_app(app)
     configure_blueprint(app)
+    make_celery(app, celery)
     return app
 
+def configure_app(app):
+    app.config.from_object(CeleryConfig)
+    app.config.from_object(DefaultConfig)
 
-def make_celery(app):
-    celery = Celery(
-        app.import_name,
-        broker=app.config['CELERY_BROKER_URL'],
-        include=['proj.tasks']
-    )
+
+def make_celery(app, celery):
+    app.config.update({"BROKER_URL": app.config["CELERY_BROKER_URL"]})
     celery.conf.update(app.config)
 
     TaskBase = celery.Task
@@ -31,7 +41,6 @@ def make_celery(app):
                 return TaskBase.__call__(self, *args, **kwargs)
 
     celery.Task = ContextTask
-    return celery
 
 
 def configure_blueprint(app):

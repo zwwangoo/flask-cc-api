@@ -1,2 +1,3 @@
 class DefaultConfig(dict):
-    pass
+    CELERY_BROKER_URL = 'redis://localhost:16379/14'
+
