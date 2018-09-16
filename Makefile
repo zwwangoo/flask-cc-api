@@ -1,5 +1,7 @@
+.PHONY: run install
+
 run:
-	python wsgi.py
+	@python wsgi.py
 
 install:requirements.txt
 	@echo 'Installing requirements.'

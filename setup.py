@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='cc',
-    version='0.0.1',
+    version='0.0.2',
     description="libs for cc api projects",
     author='wen',
     author_email='w_angzhiwen@163.com',
