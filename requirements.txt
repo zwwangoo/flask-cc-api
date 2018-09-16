@@ -1,6 +1,9 @@
 amqp==2.3.2
 aniso8601==3.0.2
+atomicwrites==1.2.1
+attrs==18.2.0
 billiard==3.5.0.4
+cc-api==0.0.1
 celery==4.2.1
 click==6.7
 Flask==1.0.2
@@ -9,7 +12,12 @@ itsdangerous==0.24
 Jinja2==2.10
 kombu==4.2.1
 MarkupSafe==1.0
+more-itertools==4.3.0
+pluggy==0.7.1
+py==1.6.0
+pytest==3.8.0
 pytz==2018.5
+redis==2.10.6
 six==1.11.0
 vine==1.1.4
 Werkzeug==0.14.1
