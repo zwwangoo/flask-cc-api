@@ -4,7 +4,7 @@
     启动 Celery Beat 进程，定时将任务发送到 Broker
         celery beat -A celery_worker.celery
 """
-from app import create_app
-from extensions import celery  # noaq
+from cc_api.app import create_app
+from cc_api.extensions import celery  # noaq
 
 app = create_app()

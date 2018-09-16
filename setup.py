@@ -11,6 +11,6 @@ setup(
     zip_safe=True,
     entry_points='''
         [console_scripts]
-        cc_api=cli:cli
+        cc_api=cc_api.cli.main:cli
     '''
 )

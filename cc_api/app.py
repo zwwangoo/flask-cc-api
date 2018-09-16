@@ -1,12 +1,12 @@
 import os
 from flask import Flask
-from extensions import celery
-from views.api import api_blueprint
+from cc_api.extensions import celery
+from cc_api.views.api import api_blueprint
 
-from config.celery_config import CeleryConfig
-from config.default_config import DefaultConfig
+from cc_api.config.celery_config import CeleryConfig
+from cc_api.config.default_config import DefaultConfig
 
-from extensions import celery
+from cc_api.extensions import celery
 
 _default_instance_path = '%(instance_path)s/instance' % \
                          {'instance_path': os.path.dirname(os.path.realpath(__file__))}

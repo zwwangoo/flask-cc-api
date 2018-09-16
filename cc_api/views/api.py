@@ -1,6 +1,7 @@
 from flask import Blueprint, current_app
 from flask_restful import Resource, Api
-from proj.tasks import add
+
+from cc_api.proj.tasks import add
 
 api_blueprint = Blueprint('api', __name__)
 api = Api(api_blueprint, catch_all_404s=True)
@@ -14,4 +15,4 @@ class Index(Resource):
         return 'ok'
 
 
-api.add_resource(Index, '')
+api.add_resource(Index, '/')
