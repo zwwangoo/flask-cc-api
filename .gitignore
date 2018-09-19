@@ -4,3 +4,4 @@ __pycache__
 celerybeat-schedule*
 celerybeat.pid
 dev/migrations/
+instance/
