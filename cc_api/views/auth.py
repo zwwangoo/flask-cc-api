@@ -4,6 +4,7 @@ from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_r
                                 get_jwt_identity, get_raw_jwt, get_jti)
 
 from cc_api.utils.requests_utils import get_argument
+from cc_api.utils.response_utils import response
 from cc_core.user_info import UserInfo
 from cc_api.utils.auth_utils import verify_hash, generate_hash, get_user_id
 
@@ -21,8 +22,10 @@ class UserLoginHandler(Resource):
         if user and verify_hash(user_password, user.password):
             access_token = create_access_token(identity=user_name)
             refrech_token = create_refresh_token(identity=user_name)
-            return jsonify({'access_token': access_token, 'refrech_token': refrech_token})
-        return 'ok'
+            result = {'access_token': access_token, 'refrech_token': refrech_token}
+            return response(data=result)
+        else:
+            return response(code=100001)
 
 
 auth_api.add_resource(UserLoginHandler, '/login')
