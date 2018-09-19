@@ -3,6 +3,9 @@ from datetime import timedelta
 
 class CeleryConfig(dict):
 
+    CELERY_BROKER_URL = 'redis://localhost:16379/14'
+    CELERY_IGNORE_RESULT = True
+
     CELERYBEAT_SCHEDULE = {
         'task_add': {
             'task': 'cc_api.proj.tasks.add',

@@ -1,7 +1,15 @@
 import os
 from flask import Flask
+from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
+
+from cc_core.base import db
+
 from cc_api.extensions import celery
+
 from cc_api.views.api import api_blueprint
+from cc_api.views.auth import auth_blueprint
+from cc_api.views.user import user_info_blueprint
 
 from cc_api.config.celery_config import CeleryConfig
 from cc_api.config.default_config import DefaultConfig
@@ -20,6 +28,8 @@ def create_app():
     configure_app(app)
     configure_blueprint(app)
     configure_celery(app, celery)
+    configure_database(app, db)
+    JWTManager(app)
     return app
 
 def configure_app(app):
@@ -43,5 +53,12 @@ def configure_celery(app, celery):
     celery.Task = ContextTask
 
 
+def configure_database(app, db):
+    db.init_app(app)
+    Migrate(app, db)
+
+
 def configure_blueprint(app):
     app.register_blueprint(api_blueprint, url_prefix='/api')
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    app.register_blueprint(user_info_blueprint, url_prefix='/auth')

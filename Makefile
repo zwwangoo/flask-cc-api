@@ -1,4 +1,4 @@
-.PHONY: run install check
+.PHONY: run install check migrate-init migrate-db
 
 pyenv_position = $(shell whereis pyenv)
 
@@ -20,11 +20,29 @@ else
 	@echo "Error: You should use pyenv. [https://github.com/pyenv/pyenv]"
 endif
 
-run:
-	@cc_api run --debugger --reload --with-threads -h 0.0.0.0
-
 install:requirements.txt
 	@echo 'Installing requirements.'
 	@pip install -U pip
 	@pip install -r requirements.txt
 	@echo 'Done'
+
+migrate-init: install
+ifeq (dev/migrations, $(wildcard dev/migrations))
+	@echo 'SKIP [migrate-init]'
+	@echo 'REASON: Database has already been initialised.'
+else
+	@echo 'Init database migration.'
+	@cc_api db init -d dev/migrations
+	@echo 'Done [migrate-init]'
+endif
+
+migrate-db: migrate-init
+	@echo 'Migrating database.'
+	@cc_api db upgrade -d dev/migrations
+	@cc_api db migrate -d dev/migrations
+	@cc_api db upgrade -d dev/migrations
+	@echo 'Done [migrate-db]'
+
+run:
+	@cc_api run --debugger --reload --with-threads -h 0.0.0.0
+
