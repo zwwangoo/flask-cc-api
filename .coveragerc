@@ -1,0 +1,40 @@
+[run]
+branch = true
+source = cc_api
+omit =
+    cc_api/config/*
+    cc_api/instance/*
+parallel = true
+
+[paths]
+source =
+    cc_api/
+    .tox/*/lib/*/site-packages/cc_api/
+
+
+[report]
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    # Have to re-enable the standard pragma
+    pragma: no cover
+
+    # Don't complain about missing debug-only code:
+    def __repr__
+    if self\.debug
+
+    # Don't complain if tests don't hit defensive assertion code:
+    raise AssertionError
+    raise NotImplementedError
+
+    # Don't complain if non-runnable code isn't run:
+    if 0:
+    if __name__ == .__main__.:
+
+    @abstractmethod
+
+ignore_errors = True
+precision = 2
+show_missing = true
+
+[html]
+directory = tests/htmlcov

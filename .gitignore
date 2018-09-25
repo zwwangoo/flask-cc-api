@@ -5,3 +5,9 @@ celerybeat-schedule*
 celerybeat.pid
 dev/migrations/
 instance/
+.python-version
+.pytest_cache/
+.tox/
+.coverage*
+!.coveragerc
+htmlcov/
