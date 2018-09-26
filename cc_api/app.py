@@ -1,20 +1,20 @@
 import os
-from flask import Flask
+from flask import Flask, got_request_exception
 from flask_migrate import Migrate
-from flask_jwt_extended import JWTManager
 
 from cc_core.base import db
 
-from cc_api.extensions import celery, redis_store
+from .extensions import celery, redis_store
 
-from cc_api.views.api import api_blueprint
-from cc_api.views.auth import auth_blueprint
-from cc_api.views.user import user_info_blueprint
+from .views.api import api_blueprint
+from .views.auth import auth_blueprint
+from .views.user import user_info_blueprint
 
-from cc_api.config.celery_config import CeleryConfig
-from cc_api.config.default_config import DefaultConfig
+from .config.celery_config import CeleryConfig
+from .config.default_config import DefaultConfig
+from .logger.logger import logger
 
-from cc_api.extensions import celery  # noqa
+from .extensions import celery, migrate, jwt_manager  # noqa
 
 _default_instance_path = '%(instance_path)s/instance' % \
                          {'instance_path': os.path.dirname(os.path.realpath(__file__))}
@@ -30,7 +30,8 @@ def create_app():
     configure_blueprint(app)
     configure_celery(app, celery)
     configure_database(app, db)
-    JWTManager(app)
+    configure_extensions(app)
+    configure_logging(app)
     return app
 
 
@@ -60,8 +61,19 @@ def configure_database(app, db):
     Migrate(app, db)
 
 
-def configure_redis(app):
+def configure_extensions(app):
+
     redis_store.init_app(app)
+
+    jwt_manager.init_app(app)
+
+
+def configure_logging(app):
+
+    def log_exception(sender, exception, **extra):
+        logger.exception(exception)
+
+    got_request_exception.connect(log_exception, app)
 
 
 def configure_blueprint(app):

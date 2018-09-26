@@ -2,10 +2,11 @@ from flask import Blueprint
 from flask_restful import Resource, Api
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_refresh_token_required
 
-from cc_api.utils.requests_utils import get_argument
-from cc_api.utils.response_utils import response
+from ..utils.requests_utils import get_argument
+from ..utils.response_utils import response
+from ..utils.auth_utils import verify_hash, get_user_id
+
 from cc_core.user_info import UserInfo
-from cc_api.utils.auth_utils import verify_hash, get_user_id
 
 auth_blueprint = Blueprint('auth', __name__)
 auth_api = Api(auth_blueprint, catch_all_404s=True)

@@ -9,5 +9,6 @@ instance/
 .pytest_cache/
 .tox/
 .coverage*
+*.log*
 !.coveragerc
 htmlcov/

@@ -1,5 +1,5 @@
 import time
-from cc_api.extensions import celery
+from ..extensions import celery
 
 
 @celery.task(bind=True)

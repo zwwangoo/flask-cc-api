@@ -1,5 +1,5 @@
 import click
-from cc_api.app import create_app
+from ..app import create_app
 from flask.cli import FlaskGroup
 
 
