@@ -5,6 +5,6 @@
         celery beat -A celery_worker.celery
 """
 from cc_api.app import create_app
-from cc_api.extensions import celery  # noaq
+from cc_api.extensions import celery  # noqa
 
 app = create_app()

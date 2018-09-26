@@ -14,10 +14,11 @@ from cc_api.views.user import user_info_blueprint
 from cc_api.config.celery_config import CeleryConfig
 from cc_api.config.default_config import DefaultConfig
 
-from cc_api.extensions import celery
+from cc_api.extensions import celery  # noqa
 
 _default_instance_path = '%(instance_path)s/instance' % \
                          {'instance_path': os.path.dirname(os.path.realpath(__file__))}
+
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True, instance_path=_default_instance_path)
@@ -31,6 +32,7 @@ def create_app():
     configure_database(app, db)
     JWTManager(app)
     return app
+
 
 def configure_app(app):
     app.config.from_object(CeleryConfig)
