@@ -1,7 +1,8 @@
 from flask import Blueprint
-from flask_restful import Resource, Api
+from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 
+from . import Api
 from ..utils.auth_utils import get_user_id
 from ..utils.requests_utils import obj_to_dict, get_request_ip
 from ..utils.response_utils import response

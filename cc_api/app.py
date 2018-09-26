@@ -1,7 +1,10 @@
 import os
 from flask import Flask, got_request_exception
 from flask_migrate import Migrate
+from flask_jwt_extended.exceptions import JWTExtendedException
+from jwt.exceptions import PyJWTError
 
+from werkzeug.exceptions import HTTPException
 from cc_core.base import db
 
 from .extensions import celery, redis_store
@@ -13,6 +16,9 @@ from .views.user import user_info_blueprint
 from .config.celery_config import CeleryConfig
 from .config.default_config import DefaultConfig
 from .logger.logger import logger
+
+from .exceptions.system_exception import SystemException
+from .exceptions.service_exception import ServiceException
 
 from .extensions import celery, migrate, jwt_manager  # noqa
 
@@ -71,6 +77,13 @@ def configure_extensions(app):
 def configure_logging(app):
 
     def log_exception(sender, exception, **extra):
+        if (isinstance(exception, ServiceException) or isinstance(exception, SystemException)) \
+                and exception.error_code not in (100000, 100001, 300000, 900001) \
+                or isinstance(exception, HTTPException) \
+                or issubclass(type(exception), PyJWTError) \
+                or issubclass(type(exception), JWTExtendedException):
+            logger.console(exception)
+            return
         logger.exception(exception)
 
     got_request_exception.connect(log_exception, app)

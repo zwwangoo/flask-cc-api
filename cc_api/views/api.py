@@ -1,5 +1,6 @@
 from flask import Blueprint
-from flask_restful import Resource, Api
+from flask_restful import Resource
+from . import Api
 
 from ..proj.tasks import sum
 
