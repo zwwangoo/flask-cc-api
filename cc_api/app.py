@@ -5,7 +5,7 @@ from flask_jwt_extended import JWTManager
 
 from cc_core.base import db
 
-from cc_api.extensions import celery
+from cc_api.extensions import celery, redis_store
 
 from cc_api.views.api import api_blueprint
 from cc_api.views.auth import auth_blueprint
@@ -58,6 +58,10 @@ def configure_celery(app, celery):
 def configure_database(app, db):
     db.init_app(app)
     Migrate(app, db)
+
+
+def configure_redis(app):
+    redis_store.init_app(app)
 
 
 def configure_blueprint(app):

@@ -1,6 +1,5 @@
-from flask import Blueprint, current_app
+from flask import Blueprint
 from flask_restful import Resource, Api
-from flask_jwt_extended import jwt_required
 
 api_blueprint = Blueprint('api', __name__)
 api = Api(api_blueprint, catch_all_404s=True)

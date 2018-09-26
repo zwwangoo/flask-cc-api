@@ -10,7 +10,7 @@ def add(self, a, b):
         print('celery tasks……')
     except Exception as e:
         raise self.retry(exc=e, countdown=5, max_retries=3)
-    return a + b
+    return c
 
 
 @celery.task(bind=True)
@@ -18,4 +18,4 @@ def sum(self, a, b):
     c = a * b
     time.sleep(12)
     print('sum')
-    return a + b
+    return c

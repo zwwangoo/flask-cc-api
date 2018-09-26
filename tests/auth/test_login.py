@@ -1,5 +1,4 @@
 import pytest
-import logging
 
 
 class TestUserLogin(object):
