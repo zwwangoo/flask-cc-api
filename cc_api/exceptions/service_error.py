@@ -4,7 +4,7 @@ from enum import unique
 
 @unique
 class ServiceError(ErrorCore):
-    NO_AUTH = 1
+    NO_AUTH = 200001
 
     def descriptions(self, error, *context):
         _descriptions = {

@@ -10,15 +10,17 @@ class SystemError(ErrorCore):
     '''
 
     # system level (100xxx)
-    SYSTEM_ERROR = 100000
-    CANNOT_FIND_APP = 100001
 
-    # service level (110xxx)
-    INVALID_PARAMETER = 110000
-    INVALID_PARAMETERS = 110001
-    MISSING_REQUIRED_PARAMETER = 110002
-    MISSING_PARAMETERS = 110003
-    PAGE_OUT_OF_RANGE = 110004
+    SYSTEM_ERROR = 100001
+    SERVICE_UNAVAILABLE = 100002
+    REMOTE_SERVICE_ERROR = 100003
+    LIMITED_IP_ADDRESS = 100004
+    PARAM_ERROR = 100005
+    TOO_MANY_PENDING_TASKS = 100006
+    JOB_EXPIRED = 100007
+    RPC_ERROR = 100008
+    MISSING_REQUIRED_PARAMETER = 100009
+    PARAMETER_VALUE_INVALID = 100010
 
     def descriptions(self, error, *context):
         '''
@@ -29,12 +31,15 @@ class SystemError(ErrorCore):
 
         _descriptions = {
             'SYSTEM_ERROR': 'System error',
-            'CANNOT_FIND_APP': 'Can\'t find flask app',
-            'INVALID_PARAMETER': 'Parameter value invalid, you provided [{}] for parameter [{}].',
-            'INVALID_PARAMETERS': 'Parameter value invalid, {}.',
-            'MISSING_REQUIRED_PARAMETER': 'Missing required parameter: {}',
-            'MISSING_PARAMETERS': 'Missing parameters, check your request please.',
-            'PAGE_OUT_OF_RANGE': 'The page you request is out of range'
+            'SERVICE_UNAVAILABLE': 'System unavailable',
+            'REMOTE_SERVICE_ERROR': 'Remote service error',
+            'LIMITED_IP_ADDRESS': 'Limited IP address',
+            'PARAM_ERROR': 'Limited IP address',
+            'TOO_MANY_PENDING_TASKS': 'Too many pending tasks, system is busy',
+            'JOB_EXPIRED': 'Job expired',
+            'RPC_ERROR': 'RPC error',
+            'MISSING_REQUIRED_PARAMETER': 'Missing required parameter ({}), see docs for more info',
+            'PARAMETER_VALUE_INVALID': 'Parameter ({0})’s value invalid: {0}, see docs for more info'
         }
 
         error_desc = _descriptions[str(error).split('.')[1]]

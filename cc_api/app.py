@@ -9,10 +9,7 @@ from cc_core.base import db
 
 from .extensions import celery, redis_store
 
-from .views.api import api_blueprint
-from .views.auth import auth_blueprint
-from .views.user import user_info_blueprint
-
+from .apis import urls
 from .config.celery_config import CeleryConfig
 from .config.default_config import DefaultConfig
 from .logger.logger import logger
@@ -26,6 +23,17 @@ _default_instance_path = '%(instance_path)s/instance' % \
                          {'instance_path': os.path.dirname(os.path.realpath(__file__))}
 
 
+def log_exception(sender, exception, **extra):
+    if (isinstance(exception, ServiceException) or isinstance(exception, SystemException)) \
+            and exception.error_code not in (100000, 100001, 300000, 900001) \
+            or isinstance(exception, HTTPException) \
+            or issubclass(type(exception), PyJWTError) \
+            or issubclass(type(exception), JWTExtendedException):
+        logger.console(exception)
+        return
+    logger.exception(exception)
+
+
 def create_app():
     app = Flask(__name__, instance_relative_config=True, instance_path=_default_instance_path)
 
@@ -35,7 +43,6 @@ def create_app():
     configure_app(app)
     configure_blueprint(app)
     configure_celery(app, celery)
-    configure_database(app, db)
     configure_extensions(app)
     configure_logging(app)
     return app
@@ -62,34 +69,20 @@ def configure_celery(app, celery):
     celery.Task = ContextTask
 
 
-def configure_database(app, db):
-    db.init_app(app)
-    Migrate(app, db)
-
-
 def configure_extensions(app):
 
     redis_store.init_app(app)
 
     jwt_manager.init_app(app)
 
+    db.init_app(app)
+
+    migrate.init_app(app, db)
 
 def configure_logging(app):
-
-    def log_exception(sender, exception, **extra):
-        if (isinstance(exception, ServiceException) or isinstance(exception, SystemException)) \
-                and exception.error_code not in (100000, 100001, 300000, 900001) \
-                or isinstance(exception, HTTPException) \
-                or issubclass(type(exception), PyJWTError) \
-                or issubclass(type(exception), JWTExtendedException):
-            logger.console(exception)
-            return
-        logger.exception(exception)
 
     got_request_exception.connect(log_exception, app)
 
 
 def configure_blueprint(app):
-    app.register_blueprint(api_blueprint, url_prefix='/api')
-    app.register_blueprint(auth_blueprint, url_prefix='/auth')
-    app.register_blueprint(user_info_blueprint, url_prefix='/auth')
+    urls.register_blueprint(app)

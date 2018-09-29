@@ -1,8 +1,6 @@
-from flask import Blueprint
 from flask_restful import Resource
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_refresh_token_required
 
-from . import Api
 from ..utils.requests_utils import get_argument
 from ..utils.response_utils import ok
 from ..utils.auth_utils import verify_hash, get_user_id
@@ -11,9 +9,6 @@ from ..exceptions.service_error import ServiceError
 from ..exceptions.service_exception import ServiceException
 
 from cc_core.user_info import UserInfo
-
-auth_blueprint = Blueprint('auth', __name__)
-auth_api = Api(auth_blueprint, catch_all_404s=True)
 
 
 class UserLoginHandler(Resource):
@@ -45,7 +40,3 @@ class UserTokenRefrech(Resource):
             return ok(data=result)
         else:
             raise ServiceException(ServiceError.NO_AUTH)
-
-
-auth_api.add_resource(UserLoginHandler, '/login')
-auth_api.add_resource(UserTokenRefrech, '/token/refrech')

@@ -4,6 +4,9 @@ from enum import Enum
 from datetime import datetime
 from werkzeug import datastructures
 
+from ..exceptions.system_error import SystemError
+from ..exceptions.system_exception import SystemException
+
 
 def get_argument(key, *, default=None, type=str, location=None, help=None, required=False):
     kwargs = dict(default=default, type=type)
@@ -16,6 +19,9 @@ def get_argument(key, *, default=None, type=str, location=None, help=None, requi
     parser = reqparse.RequestParser()
     parser.add_argument(key, **kwargs)
     args = parser.parse_args()
+
+    if required and (args[key] is None or type == str and args[key].strip() == '' and key != '_id'):
+        raise SystemException(SystemError.MISSING_REQUIRED_PARAMETER, help if help else key)
 
     return args[key]
 

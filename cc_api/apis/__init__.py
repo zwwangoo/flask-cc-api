@@ -32,7 +32,7 @@ class Api(BaseApi):
 
         if isinstance(e, HTTPException):
             code = e.code
-            result = error(msg=str(e), error_code=100000, http_status_code=code)
+            result = error(msg=str(e), error_code=100001, http_status_code=code)
         elif isinstance(e, ServiceException) or isinstance(e, SystemException):
             result = error(msg=str(e), error_code=e.error_code, http_status_code=code)
         elif issubclass(type(e), JWTExtendedException):
@@ -52,7 +52,7 @@ class Api(BaseApi):
         else:
             result = error(
                 msg=str(e) if not os.environ.get('PRODUCTION_CONFIG') else 'No response',
-                error_code=100000,
+                error_code=100001,
                 http_status_code=code
             )
 
