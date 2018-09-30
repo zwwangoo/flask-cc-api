@@ -1,6 +1,5 @@
 import os
 from flask import Flask, got_request_exception
-from flask_migrate import Migrate
 from flask_jwt_extended.exceptions import JWTExtendedException
 from jwt.exceptions import PyJWTError
 
@@ -78,6 +77,7 @@ def configure_extensions(app):
     db.init_app(app)
 
     migrate.init_app(app, db)
+
 
 def configure_logging(app):
 

@@ -4,7 +4,7 @@ from flask import json, make_response
 
 def response(data=None, error_code=None, msg='', http_status_code=200):
     args = {}
-    if error_code:
+    if error_code is not None:
         args['error_code'] = error_code
         args['bool_status'] = False
     else:
@@ -15,7 +15,7 @@ def response(data=None, error_code=None, msg='', http_status_code=200):
 
     args['msg'] = msg
     args['response_time'] = int(time.time())
-    response = make_response(json.dumps(args))
+    response = make_response(json.dumps(args), http_status_code)
     response.headers['Content-Type'] = 'application/json;charset=UTF-8'
     return response
 

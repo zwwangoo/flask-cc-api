@@ -1,5 +1,4 @@
 import os
-import sys
 from flask import current_app
 from flask.signals import got_request_exception
 from flask_restful import Api as BaseApi
@@ -20,9 +19,9 @@ class Api(BaseApi):
                  catch_all_404s=True, serve_challenge_on_401=False,
                  url_part_order='bae', errors=None):
         super().__init__(app, prefix,
-                 default_mediatype, decorators,
-                 catch_all_404s, serve_challenge_on_401,
-                 url_part_order, errors)
+                         default_mediatype, decorators,
+                         catch_all_404s, serve_challenge_on_401,
+                         url_part_order, errors)
 
     def handle_error(self, e):
         got_request_exception.send(current_app._get_current_object(), exception=e)
@@ -32,27 +31,28 @@ class Api(BaseApi):
 
         if isinstance(e, HTTPException):
             code = e.code
-            result = error(msg=str(e), error_code=100001, http_status_code=code)
+            result = error(msg=str(e),
+                           error_code=100001, http_status_code=code)
         elif isinstance(e, ServiceException) or isinstance(e, SystemException):
             result = error(msg=str(e), error_code=e.error_code, http_status_code=code)
         elif issubclass(type(e), JWTExtendedException):
-            code = 401
+            code = 403
             if isinstance(e, NoAuthorizationError):
-                result = error(msg=str(e), error_code=0, http_status_code=code)
+                result = error(msg=str(e), error_code=101001, http_status_code=code)
             elif isinstance(e, RevokedTokenError):
-                result = error(msg=str(e), error_code=2, http_status_code=code)
+                result = error(msg=str(e), error_code=101002, http_status_code=code)
             elif isinstance(e, InvalidHeaderError):
-                result = error(msg=str(e), error_code=3, http_status_code=code)
+                result = error(msg=str(e), error_code=101003, http_status_code=code)
         elif issubclass(type(e), PyJWTError):
-            code = 401
+            code = 403
             if isinstance(e, ExpiredSignatureError):
-                result = error(msg=str(e), error_code=1, http_status_code=code)
+                result = error(msg=str(e), error_code=101004, http_status_code=code)
             elif isinstance(e, InvalidSignatureError):
-                result = error(msg=str(e), error_code=4, http_status_code=code)
+                result = error(msg=str(e), error_code=101005, http_status_code=code)
         else:
             result = error(
                 msg=str(e) if not os.environ.get('PRODUCTION_CONFIG') else 'No response',
-                error_code=100001,
+                error_code=100002,
                 http_status_code=code
             )
 
