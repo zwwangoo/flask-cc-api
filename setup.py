@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name='flask_cc_api',
     version='0.0.3',
-    description="libs for cc api projects",
+    description="libs for flask-cc api projects",
     author='wen',
     author_email='w_angzhiwen@163.com',
     packages=find_packages(exclude=[]),

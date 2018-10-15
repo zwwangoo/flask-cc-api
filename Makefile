@@ -4,7 +4,7 @@ pyenv_position = $(shell whereis pyenv)
 
 ifneq ($(pyenv_position), pyenv:)
 	python_position = $(shell pyenv which python)
-	python_version = $(shell python -V | awk -F ' ' '{print substr($$2,0,3)}')
+	python_version = $(shell python -V | awk -F ' ' '{print substr($$2,0,4)}')
 	python_path = $(python_position)$(python_version)
 endif
 

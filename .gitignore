@@ -4,7 +4,8 @@ __pycache__
 *.pid
 beat.*
 dev/migrations/
-instance/
+instance/*
+!instance/testing.py
 .python-version
 .pytest_cache/
 .tox/
@@ -12,4 +13,3 @@ instance/
 *.log*
 !.coveragerc
 htmlcov/
-instance/
