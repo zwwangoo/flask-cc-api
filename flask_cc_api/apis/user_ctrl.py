@@ -1,8 +1,8 @@
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 
-from cc_core.user_info import UserInfo
-from cc_core.base import db
+from ..extensions import db
+from ..models.user_info import UserInfo
 
 from ..utils.auth_utils import get_user_id
 from ..utils.requests_utils import get_request_ip, obj_to_dict

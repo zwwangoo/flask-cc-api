@@ -4,9 +4,13 @@ from flask_jwt_extended.exceptions import JWTExtendedException
 from jwt.exceptions import PyJWTError
 
 from werkzeug.exceptions import HTTPException
-from cc_core.base import db
 
-from .extensions import celery, redis_store
+from .extensions import (
+    celery,
+    redis_store,
+    db,
+    cors
+)
 
 from .apis import urls
 from .config.celery_config import CeleryConfig
@@ -50,6 +54,7 @@ def create_app():
 def configure_app(app):
     app.config.from_object(CeleryConfig)
     app.config.from_object(DefaultConfig)
+    app.config.from_pyfile('dev.py')
 
 
 def configure_celery(app, celery):
@@ -70,12 +75,21 @@ def configure_celery(app, celery):
 
 def configure_extensions(app):
 
+    # redis
     redis_store.init_app(app)
 
+    # jwt
     jwt_manager.init_app(app)
 
+    # cors
+    cors.init_app(app,
+                  origins=['*'],
+                  methods=['POST', 'GET', 'OPTIONS', 'DELETE', 'PATCH', 'PUT'],
+                  allow_headers=['Authorization', 'Content-Type'])
+    # db
     db.init_app(app)
 
+    # migrate
     migrate.init_app(app, db)
 
 

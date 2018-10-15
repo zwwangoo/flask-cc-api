@@ -12,3 +12,4 @@ instance/
 *.log*
 !.coveragerc
 htmlcov/
+instance/

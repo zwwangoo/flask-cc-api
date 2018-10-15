@@ -8,7 +8,7 @@ from ..utils.auth_utils import verify_hash, get_user_id
 from ..exceptions.service_error import ServiceError
 from ..exceptions.service_exception import ServiceException
 
-from cc_core.user_info import UserInfo
+from ..models.user_info import UserInfo
 
 
 class UserLoginHandler(Resource):

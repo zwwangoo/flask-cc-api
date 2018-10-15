@@ -1,4 +1,4 @@
-# cc-api
+# flask-cc-api
 flask 学习 整理的 一个flask 项目框架
 [学习参考](https://github.com/flaskbb/flaskbb)
 

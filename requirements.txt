@@ -3,6 +3,7 @@ click==6.7
 Flask==1.0.2
 Flask-Migrate==2.2.1
 Flask-RESTful==0.3.6
+Flask-Cors==3.0.4
 Flask-SQLAlchemy==2.3.2
 Flask-JWT-Extended==3.9.1
 Flask-Redis==0.3.0
@@ -16,5 +17,5 @@ tox==3.0.0
 pytest==3.8.0
 pytest-cov==2.5.1
 pytest-flake8==1.0.1
+isort==4.3.4
 -e .
--e ../cc-core

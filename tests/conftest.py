@@ -1,6 +1,6 @@
 import pytest
 
-from cc_api.app import create_app
+from flask_cc_api.app import create_app
 from cc_core.base import db as _db
 
 

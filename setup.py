@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='cc_api',
+    name='flask_cc_api',
     version='0.0.3',
     description="libs for cc api projects",
     author='wen',
@@ -11,6 +11,6 @@ setup(
     zip_safe=True,
     entry_points='''
         [console_scripts]
-        cc_api=cc_api.cli.main:cli
+        flask_cc_api=flask_cc_api.cli.main:cli
     '''
 )

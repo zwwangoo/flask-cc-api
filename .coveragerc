@@ -1,15 +1,15 @@
 [run]
 branch = true
-source = cc_api
+source = flask_cc_api
 omit =
-    cc_api/config/*
-    cc_api/instance/*
+    flask_cc_api/config/*
+    flask_cc_api/instance/*
 parallel = true
 
 [paths]
 source =
-    cc_api/
-    .tox/*/lib/*/site-packages/cc_api/
+    flask_cc_api/
+    .tox/*/lib/*/site-packages/flask_cc_api/
 
 
 [report]
