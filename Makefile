@@ -11,7 +11,7 @@ endif
 check:
 	@echo 'Checking...'
 ifneq ($(pyenv_position), pyenv:)
-	@[ -f $(python_path) ] || (ln -sr $(python_position) $(python_path) && echo 'Made symbolic link $(python_path)')
+	@[ -f $(python_path) ] || (ln -s $(python_position) $(python_path) && echo 'Made symbolic link $(python_path)')
 	@[ -d flask_cc_api/instance ] || (echo 'Error: You must create an folder named instance at root of project.Then create flask_cc_api/instance/__init__.py and flask_cc_api/instance/secret.py.')
 	@[ -f flask_cc_api/instance/dev.py ] || (echo 'Error: You must create an file named cc_ap/instance/dev.py.')
 	@[ -f .python-version ] || (echo 'Suggestion: You must give an file named .python-version if you use pyenv and virtualenv.')

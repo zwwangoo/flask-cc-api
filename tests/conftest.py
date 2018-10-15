@@ -1,18 +1,18 @@
 import pytest
 
 from flask_cc_api.app import create_app
-from cc_core.base import db as _db
+from flask_cc_api.extensions import db as _db
 
 
 class TestUser():
 
     @property
     def username(self):
-        return 'test'
+        return 'admin'
 
     @property
     def password(self):
-        return '123'
+        return '123456'
 
 
 @pytest.yield_fixture
