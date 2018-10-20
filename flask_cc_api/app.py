@@ -1,26 +1,18 @@
 import os
+
 from flask import Flask, got_request_exception
 from flask_jwt_extended.exceptions import JWTExtendedException
 from jwt.exceptions import PyJWTError
-
 from werkzeug.exceptions import HTTPException
-
-from .extensions import (
-    celery,
-    redis_store,
-    db,
-    cors
-)
 
 from .apis import urls
 from .config.celery_config import CeleryConfig
 from .config.default_config import DefaultConfig
-from .logger.logger import logger
-
-from .exceptions.system_exception import SystemException
 from .exceptions.service_exception import ServiceException
-
-from .extensions import celery, migrate, jwt_manager  # noqa
+from .exceptions.system_exception import SystemException
+from .extensions import (cache, celery, cors, db, jwt_manager, migrate,  # noqa
+                         redis_store)
+from .logger.logger import logger
 
 _default_instance_path = '%(instance_path)s/instance' % \
                          {'instance_path': os.path.dirname(os.path.realpath(__file__))}
@@ -83,14 +75,18 @@ def configure_extensions(app):
 
     # cors
     cors.init_app(app,
-                  origins=['*'],
-                  methods=['POST', 'GET', 'OPTIONS', 'DELETE', 'PATCH', 'PUT'],
-                  allow_headers=['Authorization', 'Content-Type'])
+                  origins=app.config['CORS_ORIGINS'],
+                  methods=app.config['CORS_METHODS'],
+                  allow_headers=app.config['CORS_ALLOW_HEADERS'])
     # db
     db.init_app(app)
 
     # migrate
     migrate.init_app(app, db)
+
+    # cache
+    cache.config.update(app.config)
+    cache.init_app(app)
 
 
 def configure_logging(app):

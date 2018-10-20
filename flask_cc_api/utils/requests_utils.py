@@ -1,7 +1,8 @@
+from datetime import datetime
+from enum import Enum
+
 from flask import request
 from flask_restful import reqparse
-from enum import Enum
-from datetime import datetime
 from werkzeug import datastructures
 
 from ..exceptions.system_error import SystemError

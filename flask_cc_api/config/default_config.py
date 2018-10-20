@@ -5,5 +5,3 @@ class DefaultConfig(dict):
     SUPER_ADMIN = 'admin'
 
     JWT_SECRET_KEY = 'cc-api'
-
-

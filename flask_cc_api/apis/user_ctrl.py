@@ -1,9 +1,8 @@
-from flask_restful import Resource
 from flask_jwt_extended import jwt_required
+from flask_restful import Resource
 
 from ..extensions import db
 from ..models.user_info import UserInfo
-
 from ..utils.auth_utils import get_user_id
 from ..utils.requests_utils import get_request_ip, obj_to_dict
 from ..utils.response_utils import ok

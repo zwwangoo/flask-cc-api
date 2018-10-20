@@ -1,5 +1,6 @@
-from .error_core import ErrorCore
 from enum import unique
+
+from .error_core import ErrorCore
 
 
 @unique

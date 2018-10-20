@@ -1,14 +1,14 @@
+from flask_jwt_extended import (create_access_token, create_refresh_token,
+                                jwt_refresh_token_required)
 from flask_restful import Resource
-from flask_jwt_extended import create_access_token, create_refresh_token, jwt_refresh_token_required
-
-from ..utils.requests_utils import get_argument
-from ..utils.response_utils import ok
-from ..utils.auth_utils import verify_hash, get_user_id
 
 from ..exceptions.service_error import ServiceError
 from ..exceptions.service_exception import ServiceException
-
+from ..extensions import cache
 from ..models.user_info import UserInfo
+from ..utils.auth_utils import get_user_id, verify_hash
+from ..utils.requests_utils import get_argument
+from ..utils.response_utils import ok
 
 
 class UserLoginHandler(Resource):
@@ -31,6 +31,7 @@ class UserLoginHandler(Resource):
 class UserTokenRefrech(Resource):
 
     @jwt_refresh_token_required
+    @cache.cached(timeout=10)
     def get(self):
         user_id = get_user_id()
         user = UserInfo.query.filter_by(id=user_id).first()

@@ -1,9 +1,9 @@
 from flask.cli import click, with_appcontext
 
-from .main import cli
 from ..extensions import db
-from ..utils.auth_utils import generate_hash
 from ..models.user_info import UserInfo
+from ..utils.auth_utils import generate_hash
+from .main import cli
 
 
 def get_prompt(tip, data_type, default=None, hide_input=False):

@@ -1,4 +1,4 @@
-.PHONY: run install check migrate-init migrate-db test clean new-user celery
+.PHONY: run install check migrate-init migrate-db test clean new-user celery isort
 
 pyenv_position = $(shell whereis pyenv)
 
@@ -69,3 +69,7 @@ new-user:
 celery:
 	@celery -B -A celery_worker.celery worker --loglevel=info -s ./flask_cc_api/proj/schedule/beat
 
+isort:
+	@isort --order-by-type -rc -up -sp flask_cc_api/*
+	@isort --order-by-type -rc -up -sp tests/*
+	@echo 'Done [isort]'

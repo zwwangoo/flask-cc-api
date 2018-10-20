@@ -13,4 +13,3 @@ class CeleryConfig(dict):
             'args': (1, 2),
         }
     }
-
