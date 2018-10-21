@@ -4,7 +4,6 @@ from flask_restful import Resource
 
 from ..exceptions.service_error import ServiceError
 from ..exceptions.service_exception import ServiceException
-from ..extensions import cache
 from ..models.user_info import UserInfo
 from ..utils.auth_utils import get_user_id, verify_hash
 from ..utils.requests_utils import get_argument
@@ -31,8 +30,7 @@ class UserLoginHandler(Resource):
 class UserTokenRefrech(Resource):
 
     @jwt_refresh_token_required
-    @cache.cached(timeout=10)
-    def get(self):
+    def post(self):
         user_id = get_user_id()
         user = UserInfo.query.filter_by(id=user_id).first()
         if user:

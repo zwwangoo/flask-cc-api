@@ -18,4 +18,4 @@ db = SQLAlchemy()
 
 celery = Celery('flask_cc_api', include=['flask_cc_api.proj.tasks'])
 
-cache = Cache()
+cache = Cache(config={'CACHE_TYPE': 'redis'})
