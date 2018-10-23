@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from flask_redis import FlaskRedis
 from flask_sqlalchemy import SQLAlchemy
+from flasgger import Swagger
 
 redis_store = FlaskRedis()
 
@@ -19,3 +20,20 @@ db = SQLAlchemy()
 celery = Celery('flask_cc_api', include=['flask_cc_api.proj.tasks'])
 
 cache = Cache(config={'CACHE_TYPE': 'redis'})
+
+template = {
+    'swagger': '2.0',
+    'info': {
+        'title': 'API文档',
+        'version': '0.0.1'
+    },
+    'securityDefinitions': {
+        'Token': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'Bearer <jwt>'
+        }
+    }
+}
+swagger = Swagger(template=template)

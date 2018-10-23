@@ -2,6 +2,7 @@
 flask 学习 整理的 一个flask 项目框架
 [学习参考](https://github.com/flaskbb/flaskbb)
 
+
 ## 环境搭建
 
 ### 用pyenv和virtualenv搭建多版本python环境
@@ -81,7 +82,7 @@ python3.6
 
 初始化数据库：
 
-	make migrate-db
+    make migrate-db
 
 运行：
 
@@ -102,12 +103,16 @@ python3.6
 
     celery beat -A celery_worker.celery
 
+改进启动：
+
+    make celery
+
 异步执行：
 
 ```
 # api.py
 
-from cc_api.proj.tasks import add
+from .proj.tasks import add
 
     ……
     add.apply_async((2, 2), countdown=10)
@@ -115,7 +120,7 @@ from cc_api.proj.tasks import add
 
 
 # proj.tasks.py
-from cc_api.extensions import celery
+from .extensions import celery
 
 @celery.task(bind=True)
 def add(self, a, b):
@@ -124,3 +129,11 @@ def add(self, a, b):
     return a + b
 
 ```
+
+## 关于Api文档
+
+启动服务之后，本地访问
+
+    http://127.0.0.1:5000/apidocs/index.html
+
+基于swagger的实现方式，使用第三方开发的flasgger实现Api文档在注释中书写，启动服务后就可以直接查看。

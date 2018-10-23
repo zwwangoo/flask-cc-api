@@ -11,7 +11,7 @@ from .config.default_config import DefaultConfig
 from .exceptions.service_exception import ServiceException
 from .exceptions.system_exception import SystemException
 from .extensions import (cache, celery, cors, db, jwt_manager, migrate,  # noqa
-                         redis_store)
+                         redis_store, swagger)
 from .logger.logger import logger
 
 _default_instance_path = '%(instance_path)s/instance' % \
@@ -87,6 +87,9 @@ def configure_extensions(app):
     # cache
     cache.config.update(app.config)
     cache.init_app(app)
+
+    # swagger
+    swagger.init_app(app)
 
 
 def configure_logging(app):

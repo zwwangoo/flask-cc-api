@@ -1,17 +1,17 @@
 import urllib
 
+from functools import wraps
 from flask import request
 
 from ..extensions import cache
 
 
-def cache_clear(*key):
-    def decorator(func):
-        def wrapper(*args, **kw):
-            cache.clear()
-            return func(*args, **kw)
-        return wrapper
-    return decorator
+def cache_clear(fn):
+    @wraps
+    def wrapper(*args, **kwargs):
+        cache.cache_clear()
+        return fn(*args, **kwargs)
+    return wrapper
 
 
 def cache_key():

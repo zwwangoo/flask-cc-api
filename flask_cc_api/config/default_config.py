@@ -5,3 +5,7 @@ class DefaultConfig(dict):
     SUPER_ADMIN = 'admin'
 
     JWT_SECRET_KEY = 'cc-api'
+
+    CORS_ORIGINS = ['*']
+    CORS_METHODS = ['POST', 'GET', 'OPTIONS', 'DELETE', 'PATCH', 'PUT']
+    CORS_ALLOW_HEADERS = ['Authorization', 'Content-Type']
