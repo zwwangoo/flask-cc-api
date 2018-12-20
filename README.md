@@ -10,7 +10,7 @@ flask 学习 整理的 一个flask 项目框架
 - 选择安装到$HOME/.pyenv目录
 
 ```
-git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 ```
 
 - 配置环境变量
