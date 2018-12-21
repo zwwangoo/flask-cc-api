@@ -24,6 +24,7 @@ install:requirements.txt
 	@echo 'Installing requirements.'
 	@pip install -U pip
 	@pip install -r requirements.txt
+	@pre-commit install
 	@echo 'Done'
 
 migrate-init: install
@@ -56,7 +57,7 @@ clean:
 	@find . -name '*.log' -print -exec rm -f {} +
 	@find . -name '.pytest_cache' -print -exec rm -rf {} +
 	@find . -name '__pycache__' -print -exec rm -rf {} +
-	@find . -name 'beat.*' -print -exec rm -rf {} + 
+	@find . -name 'beat.*' -print -exec rm -rf {} +
 	@find . -path ./.coveragerc -prune -o -name '*coverage*' -print -exec rm -f {} +
 	@echo 'Done [clean]'
 
