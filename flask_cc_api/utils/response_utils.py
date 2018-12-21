@@ -1,4 +1,6 @@
 import time
+from datetime import datetime
+from enum import Enum
 
 from flask import json, make_response
 
@@ -27,3 +29,22 @@ def error(msg='error', error_code=None, http_status_code=200):
 
 def ok(data=None, msg='ok', http_status_code=200):
     return response(data=data, msg=msg, http_status_code=http_status_code)
+
+
+def obj_to_dict(obj, keys=None, *, display=True, format_time='%Y-%m-%d %H:%M:%S'):
+    dict_result = {}
+    obj_values = obj.__dict__
+
+    for key in obj_values:
+        if key == '_sa_instance_state':
+            continue
+        key_value = obj_values.get(key)
+        if display and key in keys \
+                or not display and key not in keys:
+            if isinstance(key_value, datetime):
+                dict_result[key] = datetime.strftime(key_value, format_time)
+            elif isinstance(key_value, Enum):
+                dict_result[key] = key_value.value
+            else:
+                dict_result[key] = key_value
+    return dict_result

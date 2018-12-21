@@ -5,8 +5,8 @@ from ..extensions import cache, db
 from ..models.user_info import UserInfo
 from ..utils.auth_utils import get_user_id
 from ..utils.cache_utils import cache_key
-from ..utils.requests_utils import get_request_ip, obj_to_dict
-from ..utils.response_utils import ok
+from ..utils.requests_utils import get_request_ip
+from ..utils.response_utils import obj_to_dict, ok
 
 
 class UserInfoHandler(Resource):
