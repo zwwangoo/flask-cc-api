@@ -26,7 +26,7 @@ def register_blueprint(app):
 
             try:
                 module = importlib.import_module('.' + module_name, __package__)
-            except Exception as err:
+            except Exception:
                 print(traceback.format_exc())
                 os._exit(0)
 

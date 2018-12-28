@@ -1,4 +1,4 @@
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://sql:123456@127.0.0.1:3306/cc_dev'
+SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/flask-cc-api-dev.db'
 JWT_SECRET_KEY = 'flask_cc_api'
 
 CORS_ORIGINS = ['*']
