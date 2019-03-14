@@ -10,9 +10,11 @@ from .config.celery_config import CeleryConfig
 from .config.default_config import DefaultConfig
 from .exceptions.service_exception import ServiceException
 from .exceptions.system_exception import SystemException
-from .extensions import (cache, celery, cors, db, jwt_manager, migrate,  # noqa
-                         redis_store, swagger)
-from .logger.logger import logger
+from .extensions import (
+    cache, celery, cors, db, jwt_manager, migrate,  # noqa
+    redis_store, swagger,
+)
+from .logger import log, init as log_init
 
 _default_instance_path = '%(instance_path)s/instance' % \
                          {'instance_path': os.path.dirname(os.path.realpath(__file__))}
@@ -20,13 +22,13 @@ _default_instance_path = '%(instance_path)s/instance' % \
 
 def log_exception(sender, exception, **extra):
     if (isinstance(exception, ServiceException) or isinstance(exception, SystemException)) \
-            and exception.error_code not in (100000, 100001, 300000, 900001) \
+            and exception.error_code not in (100000, 100001) \
             or isinstance(exception, HTTPException) \
             or issubclass(type(exception), PyJWTError) \
             or issubclass(type(exception), JWTExtendedException):
-        logger.console(exception)
+        log.info(exception.__repr__())
         return
-    logger.exception(exception)
+    log.exception(exception)
 
 
 def create_app():
@@ -74,10 +76,12 @@ def configure_extensions(app):
     jwt_manager.init_app(app)
 
     # cors
-    cors.init_app(app,
-                  origins=app.config['CORS_ORIGINS'],
-                  methods=app.config['CORS_METHODS'],
-                  allow_headers=app.config['CORS_ALLOW_HEADERS'])
+    cors.init_app(
+        app,
+        origins=app.config['CORS_ORIGINS'],
+        methods=app.config['CORS_METHODS'],
+        allow_headers=app.config['CORS_ALLOW_HEADERS'],
+    )
     # db
     db.init_app(app)
 
@@ -90,6 +94,9 @@ def configure_extensions(app):
 
     # swagger
     swagger.init_app(app)
+
+    # loguru
+    log_init()
 
 
 def configure_logging(app):

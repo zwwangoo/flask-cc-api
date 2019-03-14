@@ -13,7 +13,7 @@ def response(data=None, error_code=None, msg='', http_status_code=200):
     else:
         args['bool_status'] = True
 
-    if data:
+    if data is not None:
         args['data'] = data
 
     args['msg'] = msg
