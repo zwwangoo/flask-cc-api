@@ -27,8 +27,8 @@ def log_exception(sender, exception, **extra):
             or issubclass(type(exception), PyJWTError) \
             or issubclass(type(exception), JWTExtendedException):
         log.info(exception.__repr__())
-        return
-    log.exception(exception)
+    else:
+        log.exception(exception)
 
 
 def create_app():

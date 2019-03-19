@@ -42,4 +42,3 @@ def init():
     )
     # log.add('./neoline_api/logger/info_logs/serialize_info.log', format=formatter.format, rotation="64 MB",
     #         serialize=True, enqueue=True, backtrace=False)
-    log.info('log module loaded')

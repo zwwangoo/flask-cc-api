@@ -11,7 +11,6 @@ from ..exceptions.service_exception import ServiceException
 def _get_request():
     if 'req' not in g:
         g.req = reqparse.RequestParser()
-    print(request.__dict__)
     return g.req
 
 
