@@ -1,8 +1,8 @@
 version: "3"
 
 services:
-    experience_admin_api_staging:
-        container_name: flask_cc_api_staging_container 
+    flask_cc_api_staging:
+        container_name: flask_cc_api_staging_container
         image: flask_cc_api_staging:latest
         ports:
             - 20006:5000
