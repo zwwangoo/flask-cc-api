@@ -48,7 +48,11 @@ def create_app():
 def configure_app(app):
     app.config.from_object(CeleryConfig)
     app.config.from_object(DefaultConfig)
-    app.config.from_pyfile('dev.py')
+
+    if os.environ.get('FLASK_ENV') == 'production':
+        app.config.from_pyfile('prod.py')
+    else:
+        app.config.from_pyfile('dev.py')
 
 
 def configure_celery(app, celery):

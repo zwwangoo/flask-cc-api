@@ -45,7 +45,8 @@ migrate-db: migrate-init
 	@echo 'Done [migrate-db]'
 
 run:
-	@flask_cc_api run --debugger --reload --with-threads -h 0.0.0.0
+	@export FLASK_ENV=development && \
+		flask_cc_api run --debugger --reload --with-threads -h 0.0.0.0
 
 clean:
 	@echo 'removing...'
