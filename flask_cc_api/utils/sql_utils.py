@@ -1,3 +1,4 @@
+from decimal import Decimal
 from .extensions import db
 
 
@@ -44,12 +45,17 @@ def row_format(row):
     对 SQL 结果进行dict类型转换
     """
     row_dict = RowProxyDict()
+    if not row:
+        return row_dict
+
     for (key, value) in row.items():
+        if isinstance(value, Decimal):
+            value = float(value)
         row_dict[key] = value
     return row_dict
 
 
-def fetchall(sql, params):
+def fetchall(sql, params={}):
     """
     获取多个SQL执行结果
     """
@@ -60,11 +66,9 @@ def fetchall(sql, params):
     return beans
 
 
-def fetchone(sql, params):
+def fetchone(sql, params={}):
     """
     获取一个SQL执行结果
     """
     result = db.session.execute(sql, params).fetchone()
-    if not result:
-        return {}
     return row_format(result)
