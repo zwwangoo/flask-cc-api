@@ -1,0 +1,5 @@
+recursive-include flask_cc_api/instance *
+recursive-include tests *
+include README.md
+include requirements.txt
+include requirements-prod.txt

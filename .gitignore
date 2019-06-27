@@ -13,3 +13,6 @@ instance/*
 *.log*
 !.coveragerc
 htmlcov/
+build
+dist
+.idea
