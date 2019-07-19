@@ -33,12 +33,12 @@ def init():
     formatter = Formatter()
 
     log.add(
-        'flask_cc_api/logger/info_logs/info.log', format=formatter.format, rotation="64 MB", enqueue=True,
+        'flask_cc_api/logger/info_logs/info.log', format=formatter.format, rotation="64 MB",
         backtrace=False,
     )
     log.add(
         'flask_cc_api/logger/error_logs/error.log', format=formatter.format, rotation="16 MB",
-        filter=lambda record: record["level"].no >= 40, enqueue=True, backtrace=False,
+        filter=lambda record: record["level"].no >= 40, backtrace=False,
     )
     # log.add('./neoline_api/logger/info_logs/serialize_info.log', format=formatter.format, rotation="64 MB",
     #         serialize=True, enqueue=True, backtrace=False)

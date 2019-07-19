@@ -4,6 +4,7 @@ from flask import Flask, got_request_exception
 from flask_jwt_extended.exceptions import JWTExtendedException
 from jwt.exceptions import PyJWTError
 from werkzeug.exceptions import HTTPException
+from sqlalchemy.exc import OperationalError
 
 from .apis import urls
 from .config.celery_config import CeleryConfig
@@ -22,11 +23,11 @@ _default_instance_path = '%(instance_path)s/instance' % \
 
 def log_exception(sender, exception, **extra):
     if (isinstance(exception, ServiceException) or isinstance(exception, SystemException)) \
-            and exception.error_code not in (100000, 100001) \
-            or isinstance(exception, HTTPException) \
-            or issubclass(type(exception), PyJWTError) \
-            or issubclass(type(exception), JWTExtendedException):
-        log.info(exception.__repr__())
+       or isinstance(exception, HTTPException) \
+       or issubclass(type(exception), PyJWTError) \
+       or issubclass(type(exception), OperationalError) \
+       or issubclass(type(exception), JWTExtendedException):
+        log.error(exception)
     else:
         log.exception(exception)
 
