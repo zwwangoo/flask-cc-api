@@ -8,6 +8,8 @@ instance/*
 !instance/testing.py
 .python-version
 .pytest_cache/
+docs/_build/
+
 .tox/
 .coverage*
 *.log*
