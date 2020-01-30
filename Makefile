@@ -1,4 +1,4 @@
-.PHONY: run install check migrate-init migrate-db test clean new-user celery isort
+.PHONY: run install check migrate-init migrate-db test clean new-user celery isort build docker
 
 pyenv_position = $(shell whereis pyenv)
 
@@ -75,3 +75,12 @@ isort:
 	@isort --order-by-type -rc -up -sp flask_cc_api/*
 	@isort --order-by-type -rc -up -sp tests/*
 	@echo 'Done [isort]'
+
+docker:
+	@mv dist/flask_cc_api-0.9.0.dev1-py2.py3-none-any.whl ./dockers/
+	@cd dockers && sudo docker-compose up --build -d
+	@echo 'end.'
+
+build:
+	@pip install wheel
+	@python setup.py bdist_wheel

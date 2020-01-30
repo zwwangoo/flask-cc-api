@@ -1,0 +1,11 @@
+version: "2.2"
+
+services:
+    flask_cc_api:
+        container_name: flask_cc_api_container
+        build:
+          context: .
+        ports:
+          - 5001:5000
+        volumes:
+          - /etc/localtime:/etc/localtime
