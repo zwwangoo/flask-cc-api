@@ -1,4 +1,4 @@
-.PHONY: run install check migrate-init migrate-db test clean new-user celery isort build docker
+.PHONY: run install check migrate-init migrate-db test clean new-user celery isort build docker docs
 
 pyenv_position = $(shell whereis pyenv)
 
@@ -43,6 +43,12 @@ migrate-db: migrate-init
 	@flask_cc_api db migrate -d dev/migrations
 	@flask_cc_api db upgrade -d dev/migrations
 	@echo 'Done [migrate-db]'
+
+
+docs:
+	@pip install sphinx sphinx_rtd_theme
+	@cd docs && make html
+	@echo "\033[95m\n\nBuild successful! View the docs homepage at docs/_build/html/index.html.\n\033[0m"
 
 run:
 	@export FLASK_ENV=development && \
